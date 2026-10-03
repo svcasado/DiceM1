@@ -1,8 +1,10 @@
 const SALDO_INICIAL = 100;
+const APUESTA_MINIMA = 10;
 const DURACION_TIRADA = 800;
 const SONIDO_TIRAR = "sonidos/spin.mp3";
 const SONIDO_GANAR = "sonidos/win.mp3";
 const SONIDO_PERDER = "sonidos/lose.mp3";
+const TECLA_NOCHE = "N";
 
 const deslizador = document.querySelector("#objetivo");
 const campoApuesta = document.querySelector("#apuesta");
@@ -15,11 +17,11 @@ const textoSaldo = document.querySelector("#saldo");
 const textoTirada = document.querySelector("#tirada");
 const marca = document.querySelector("#marca");
 const botonTirar = document.querySelector("#boton-tirar");
+const botonReiniciar = document.querySelector("#boton-reiniciar");
 const textoResultado = document.querySelector("#resultado");
 const listaHistorial = document.querySelector("#historial");
 
 let saldo = SALDO_INICIAL;
-const historial = [];
 
 function calcularMultiplicador(objetivo) {
   return Math.round((100 / objetivo) * 100) / 100;
@@ -36,7 +38,8 @@ function actualizarPanel() {
   textoObjetivo.textContent = objetivo;
   textoProbabilidad.textContent = `${objetivo}%`;
   textoMultiplicador.textContent = `x${calcularMultiplicador(objetivo)}`;
-  textoPremio.textContent = calcularPremio(apuesta, objetivo);
+  textoPremio.textContent =
+    campoApuesta.value === "" ? "--" : calcularPremio(apuesta, objetivo);
   zonaGanar.style.width = `${objetivo}%`;
 }
 
@@ -50,12 +53,15 @@ function validarApuesta(valor) {
   if (valor === "") {
     return "Escribe cuántas fichas quieres apostar.";
   }
-  if (apuesta < 1 || apuesta % 1 !== 0) {
-    return "La apuesta tiene que ser un número entero mayor que 0.";
+  if (apuesta % 1 !== 0) {
+    return "La apuesta tiene que ser un número entero.";
+  }
+  if (apuesta < APUESTA_MINIMA) {
+    return `La apuesta mínima es de ${APUESTA_MINIMA} fichas.`;
   }
 
   if (apuesta > saldo) {
-    return "No tienes suficiente dinero para apostar esa cantidad";
+    return `Solo tienes ${saldo} fichas.`;
   }
 
   return "";
@@ -87,27 +93,15 @@ function mostrarTirada(tirada, gana, mensaje) {
   textoSaldo.textContent = saldo;
 }
 
-function agregarAlHistorial(registro) {
-  historial.push(registro);
-
+function agregarAlHistorial(tirada, gana) {
   const ficha = document.createElement("button");
-  ficha.type = "button";
-  ficha.textContent = registro.tirada;
-  ficha.setAttribute("data-indice", historial.length - 1);
-  pintarResultado(ficha, registro.gana);
+  ficha.setAttribute("type", "button");
+  ficha.textContent = tirada;
+  pintarResultado(ficha, gana);
 
   const elementoLista = document.createElement("li");
   elementoLista.appendChild(ficha);
   listaHistorial.appendChild(elementoLista);
-}
-
-function mostrarDetalle(registro) {
-  const resultado = registro.gana
-    ? `cobraste ${registro.premio} fichas`
-    : `perdiste ${registro.apuesta} fichas`;
-  mostrarAviso(
-    `Tirada ${registro.numero}: salió ${registro.tirada} con objetivo ${registro.objetivo}. Apostaste ${registro.apuesta} y ${resultado}.`,
-  );
 }
 
 function jugar() {
@@ -132,9 +126,9 @@ function resolverTirada(objetivo, apuesta) {
   const tirada = tirarDado();
   const gana = tirada < objetivo;
 
-  saldo -= apuesta;
+  saldo = saldo - apuesta;
   if (gana) {
-    saldo += premio;
+    saldo = saldo + premio;
   }
 
   const mensaje = gana
@@ -143,28 +137,52 @@ function resolverTirada(objetivo, apuesta) {
   reproducir(gana ? SONIDO_GANAR : SONIDO_PERDER);
   mostrarTirada(tirada, gana, mensaje);
 
-  agregarAlHistorial({
-    numero: historial.length + 1,
-    tirada: tirada,
-    objetivo: objetivo,
-    apuesta: apuesta,
-    premio: premio,
-    gana: gana,
-  });
+  agregarAlHistorial(tirada, gana);
 
   botonTirar.disabled = false;
+
+  if (saldo < APUESTA_MINIMA) {
+    terminarPartida();
+  }
+}
+
+function terminarPartida() {
+  mostrarAviso(
+    `Te has quedado sin fichas después de ${listaHistorial.children.length} tiradas.`,
+  );
+  botonTirar.classList.add("oculto");
+  botonReiniciar.classList.remove("oculto");
+}
+
+function reiniciarPartida() {
+  saldo = SALDO_INICIAL;
+  listaHistorial.textContent = "";
+
+  textoSaldo.textContent = saldo;
+  textoTirada.textContent = "--";
+  marca.classList.add("oculto");
+  mostrarAviso("Haz tu apuesta…");
+
+  botonReiniciar.classList.add("oculto");
+  botonTirar.classList.remove("oculto");
 }
 
 deslizador.addEventListener("input", actualizarPanel);
 campoApuesta.addEventListener("input", actualizarPanel);
 botonTirar.addEventListener("click", jugar);
+botonReiniciar.addEventListener("click", reiniciarPartida);
 
 listaHistorial.addEventListener("click", (event) => {
-  const ficha = event.target.closest("button");
-  if (!ficha) return;
+  const fichaPulsada = event.target.closest("button");
+  if (!fichaPulsada) return;
 
-  const indice = Number(ficha.getAttribute("data-indice"));
-  mostrarDetalle(historial[indice]);
+  mostrarAviso(`En esa tirada salió un ${fichaPulsada.textContent}.`);
+});
+
+document.addEventListener("keydown", (event) => {
+  if (event.key.toUpperCase() === TECLA_NOCHE) {
+    document.querySelector("body").classList.toggle("noche");
+  }
 });
 
 actualizarPanel();
