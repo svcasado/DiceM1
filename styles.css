@@ -1,3 +1,288 @@
+/* Colores: el modo noche solo cambia estas variables */
+:root {
+  --fondo: #e9edf3;
+  --mesa: #ffffff;
+  --texto: #1c2331;
+  --suave: #6b7487;
+  --borde: #d8dee8;
+  --ganar: #15803d;
+  --perder: #dc2626;
+  --acento: #4f46e5;
+}
+
+body.noche {
+  --fondo: #0f1420;
+  --mesa: #1a2130;
+  --texto: #e8ecf3;
+  --suave: #8d97ab;
+  --borde: #2b3446;
+}
+
+* {
+  box-sizing: border-box;
+}
+
 body {
-  background-color: lightslategrey;
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  font-family: system-ui, "Segoe UI", Arial, sans-serif;
+  color: var(--texto);
+  background-color: var(--fondo);
+  transition:
+    background-color 0.3s,
+    color 0.3s;
+}
+
+.mesa {
+  width: 100%;
+  max-width: 440px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 28px;
+  background-color: var(--mesa);
+  border: 1px solid var(--borde);
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+.oculto {
+  display: none;
+}
+
+/* Cabecera y apuesta */
+.cabecera {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+h1 {
+  margin: 0;
+  font-size: 24px;
+}
+
+.saldo {
+  margin: 0;
+  color: var(--suave);
+}
+
+.saldo strong {
+  font-size: 20px;
+  color: var(--texto);
+}
+
+strong,
+.tirada {
+  font-variant-numeric: tabular-nums;
+}
+
+.campo {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+label {
+  font-size: 14px;
+  color: var(--suave);
+}
+
+input[type="number"] {
+  padding: 10px 12px;
+  font: inherit;
+  font-size: 18px;
+  color: var(--texto);
+  background-color: var(--fondo);
+  border: 1px solid var(--borde);
+  border-radius: 8px;
+}
+
+/* Número que sale y barra del dado */
+.tirada {
+  margin: 0;
+  text-align: center;
+  font-size: 56px;
+  font-weight: 700;
+}
+
+.barra {
+  position: relative;
+  height: 12px;
+  margin: 36px 0 8px;
+  background-color: var(--perder);
+  border-radius: 6px;
+}
+
+.zona-ganar {
+  width: 50%;
+  height: 100%;
+  background-color: var(--ganar);
+  border-radius: 6px 0 0 6px;
+}
+
+.barra input[type="range"] {
+  position: absolute;
+  top: -8px;
+  left: 0;
+  width: 100%;
+  height: 28px;
+  margin: 0;
+  background: transparent;
+  appearance: none;
+  -webkit-appearance: none;
+  cursor: pointer;
+}
+
+.barra input[type="range"]::-webkit-slider-thumb {
+  width: 28px;
+  height: 28px;
+  background-color: var(--mesa);
+  border: 3px solid var(--acento);
+  border-radius: 6px;
+  -webkit-appearance: none;
+}
+
+.barra input[type="range"]::-moz-range-thumb {
+  width: 22px;
+  height: 22px;
+  background-color: var(--mesa);
+  border: 3px solid var(--acento);
+  border-radius: 6px;
+}
+
+.marca {
+  position: absolute;
+  top: -36px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 2px 8px;
+  font-size: 13px;
+  font-weight: 700;
+  color: #ffffff;
+  background-color: var(--texto);
+  border-radius: 6px;
+  pointer-events: none;
+  transition: left 0.4s;
+}
+
+.escala {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  color: var(--suave);
+}
+
+/* Probabilidad, multiplicador y premio */
+.datos {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+.datos p {
+  margin: 0;
+  padding: 10px;
+  text-align: center;
+  background-color: var(--fondo);
+  border-radius: 8px;
+}
+
+.datos span {
+  display: block;
+  font-size: 12px;
+  color: var(--suave);
+}
+
+.datos strong {
+  font-size: 18px;
+}
+
+/* Botón y mensaje */
+.boton-tirar {
+  padding: 14px;
+  font: inherit;
+  font-size: 18px;
+  font-weight: 700;
+  color: #ffffff;
+  background-color: var(--acento);
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: transform 0.1s;
+}
+
+.boton-tirar:hover {
+  filter: brightness(1.1);
+}
+
+.boton-tirar:active {
+  transform: scale(0.98);
+}
+
+.boton-tirar:disabled {
+  opacity: 0.5;
+  cursor: wait;
+}
+
+.boton-tirar:focus-visible,
+input:focus-visible {
+  outline: 3px solid var(--acento);
+  outline-offset: 2px;
+}
+
+.resultado {
+  min-height: 1.5em;
+  margin: 0;
+  text-align: center;
+  font-weight: 600;
+}
+
+/* Historial */
+.historial h2 {
+  margin: 0 0 8px;
+  font-size: 13px;
+  color: var(--suave);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.lista-historial {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.lista-historial li {
+  padding: 4px 10px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #ffffff;
+  border-radius: 999px;
+}
+
+/* Clases que pondrá el JS según se gane o se pierda */
+.resultado.gana {
+  color: var(--ganar);
+}
+
+.resultado.pierde {
+  color: var(--perder);
+}
+
+.marca.gana,
+.lista-historial li.gana {
+  background-color: var(--ganar);
+}
+
+.marca.pierde,
+.lista-historial li.pierde {
+  background-color: var(--perder);
 }

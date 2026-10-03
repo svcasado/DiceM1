@@ -8,6 +8,50 @@
     <script src="app.js" defer></script>
   </head>
   <body>
-    <h1>Roll the Dice</h1>
+    <main class="mesa">
+      <header class="cabecera">
+        <h1>Roll the Dice</h1>
+        <p class="saldo">Saldo <strong id="saldo">100</strong> fichas</p>
+      </header>
+
+      <div class="campo">
+        <label for="apuesta">Apuesta</label>
+        <input id="apuesta" type="number" min="1" step="1" value="10" />
+      </div>
+
+      <p id="tirada" class="tirada">--</p>
+
+      <div class="dado">
+        <label for="objetivo">
+          Ganas si sale menos de <span id="valor-objetivo">50</span>
+        </label>
+        <div class="barra">
+          <div id="zona-ganar" class="zona-ganar"></div>
+          <div id="marca" class="marca oculto"></div>
+          <input id="objetivo" type="range" min="2" max="98" value="50" />
+        </div>
+        <div class="escala">
+          <span>0</span><span>25</span><span>50</span><span>75</span
+          ><span>100</span>
+        </div>
+      </div>
+
+      <div class="datos">
+        <p><span>Probabilidad</span><strong id="probabilidad">50%</strong></p>
+        <p>
+          <span>Multiplicador</span><strong id="multiplicador">x2.00</strong>
+        </p>
+        <p><span>Premio</span><strong id="premio">20</strong></p>
+      </div>
+
+      <button id="boton-tirar" class="boton-tirar" type="button">Tirar</button>
+
+      <p id="resultado" class="resultado" aria-live="polite">Haz tu apuesta…</p>
+
+      <section class="historial">
+        <h2>Historial</h2>
+        <ul id="historial" class="lista-historial"></ul>
+      </section>
+    </main>
   </body>
 </html>
