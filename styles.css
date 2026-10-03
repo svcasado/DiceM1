@@ -1,4 +1,3 @@
-/* Colores: el modo noche solo cambia estas variables */
 :root {
   --fondo: #e9edf3;
   --mesa: #ffffff;
@@ -54,7 +53,6 @@ body {
   display: none;
 }
 
-/* Cabecera y apuesta */
 .cabecera {
   display: flex;
   justify-content: space-between;
@@ -102,7 +100,6 @@ input[type="number"] {
   border-radius: 8px;
 }
 
-/* Número que sale y barra del dado */
 .tirada {
   margin: 0;
   text-align: center;
@@ -134,25 +131,7 @@ input[type="number"] {
   margin: 0;
   background: transparent;
   appearance: none;
-  -webkit-appearance: none;
   cursor: pointer;
-}
-
-.barra input[type="range"]::-webkit-slider-thumb {
-  width: 28px;
-  height: 28px;
-  background-color: var(--mesa);
-  border: 3px solid var(--acento);
-  border-radius: 6px;
-  -webkit-appearance: none;
-}
-
-.barra input[type="range"]::-moz-range-thumb {
-  width: 22px;
-  height: 22px;
-  background-color: var(--mesa);
-  border: 3px solid var(--acento);
-  border-radius: 6px;
 }
 
 .marca {
@@ -177,7 +156,6 @@ input[type="number"] {
   color: var(--suave);
 }
 
-/* Probabilidad, multiplicador y premio */
 .datos {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -202,7 +180,6 @@ input[type="number"] {
   font-size: 18px;
 }
 
-/* Botón y mensaje */
 .boton-tirar {
   padding: 14px;
   font: inherit;
@@ -242,7 +219,6 @@ input:focus-visible {
   font-weight: 600;
 }
 
-/* Historial */
 .historial h2 {
   margin: 0 0 8px;
   font-size: 13px;
@@ -276,7 +252,6 @@ input:focus-visible {
   outline-offset: 2px;
 }
 
-/* Clases que pondrá el JS según se gane o se pierda */
 .resultado.gana {
   color: var(--ganar);
 }
