@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Roll the Dice</title>
     <link rel="stylesheet" href="styles.css" />
-    <script src="app.js" defer></script>
+    <script src="app.js" type="module"></script>
   </head>
   <body>
     <main class="mesa">
@@ -16,7 +16,7 @@
 
       <div class="campo">
         <label for="apuesta">Apuesta</label>
-        <input id="apuesta" type="number" min="1" step="1" value="10" />
+        <input id="apuesta" type="number" min="10" step="1" value="10" />
       </div>
 
       <p id="tirada" class="tirada">--</p>
@@ -38,13 +38,14 @@
 
       <div class="datos">
         <p><span>Probabilidad</span><strong id="probabilidad">50%</strong></p>
-        <p>
-          <span>Multiplicador</span><strong id="multiplicador">x2.00</strong>
-        </p>
+        <p><span>Multiplicador</span><strong id="multiplicador">x2</strong></p>
         <p><span>Premio</span><strong id="premio">20</strong></p>
       </div>
 
       <button id="boton-tirar" class="boton-tirar" type="button">Tirar</button>
+      <button id="boton-reiniciar" class="boton-tirar oculto" type="button">
+        Volver a empezar
+      </button>
 
       <p id="resultado" class="resultado" aria-live="polite">Haz tu apuesta…</p>
 
