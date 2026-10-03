@@ -260,12 +260,20 @@ input:focus-visible {
   list-style: none;
 }
 
-.lista-historial li {
+.lista-historial button {
   padding: 4px 10px;
+  font: inherit;
   font-size: 14px;
   font-weight: 600;
   color: #ffffff;
+  border: none;
   border-radius: 999px;
+  cursor: pointer;
+}
+
+.lista-historial button:focus-visible {
+  outline: 3px solid var(--acento);
+  outline-offset: 2px;
 }
 
 /* Clases que pondrá el JS según se gane o se pierda */
@@ -278,11 +286,11 @@ input:focus-visible {
 }
 
 .marca.gana,
-.lista-historial li.gana {
+.lista-historial button.gana {
   background-color: var(--ganar);
 }
 
 .marca.pierde,
-.lista-historial li.pierde {
+.lista-historial button.pierde {
   background-color: var(--perder);
 }
