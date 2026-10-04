@@ -1,9 +1,6 @@
 const SALDO_INICIAL = 100;
 const APUESTA_MINIMA = 10;
 const DURACION_TIRADA = 800;
-const SONIDO_TIRAR = "sonidos/spin.mp3";
-const SONIDO_GANAR = "sonidos/win.mp3";
-const SONIDO_PERDER = "sonidos/lose.mp3";
 const TECLA_NOCHE = "N";
 
 const deslizador = document.querySelector("#objetivo");
@@ -67,11 +64,6 @@ function validarApuesta(valor) {
   return "";
 }
 
-function reproducir(ruta) {
-  const sonido = new Audio(ruta);
-  sonido.play();
-}
-
 function pintarResultado(elemento, gana) {
   elemento.classList.remove("gana", "pierde");
   elemento.classList.add(gana ? "gana" : "pierde");
@@ -117,7 +109,6 @@ function jugar() {
   botonTirar.disabled = true;
   textoTirada.textContent = "…";
   mostrarAviso("El dado está rodando…");
-  reproducir(SONIDO_TIRAR);
   setTimeout(() => resolverTirada(objetivo, apuesta), DURACION_TIRADA);
 }
 
@@ -134,7 +125,6 @@ function resolverTirada(objetivo, apuesta) {
   const mensaje = gana
     ? `¡Ha salido ${tirada}! Cobras ${premio} fichas.`
     : `Ha salido ${tirada}. Pierdes ${apuesta} fichas.`;
-  reproducir(gana ? SONIDO_GANAR : SONIDO_PERDER);
   mostrarTirada(tirada, gana, mensaje);
 
   agregarAlHistorial(tirada, gana);
