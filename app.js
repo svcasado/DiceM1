@@ -1,6 +1,5 @@
 const SALDO_INICIAL = 100;
 const APUESTA_MINIMA = 10;
-const DURACION_TIRADA = 800;
 const TECLA_NOCHE = "N";
 
 const deslizador = document.querySelector("#objetivo");
@@ -105,14 +104,6 @@ function jugar() {
 
   const objetivo = Number(deslizador.value);
   const apuesta = Number(campoApuesta.value);
-
-  botonTirar.disabled = true;
-  textoTirada.textContent = "…";
-  mostrarAviso("El dado está rodando…");
-  setTimeout(() => resolverTirada(objetivo, apuesta), DURACION_TIRADA);
-}
-
-function resolverTirada(objetivo, apuesta) {
   const premio = calcularPremio(apuesta, objetivo);
   const tirada = tirarDado();
   const gana = tirada < objetivo;
@@ -128,8 +119,6 @@ function resolverTirada(objetivo, apuesta) {
   mostrarTirada(tirada, gana, mensaje);
 
   agregarAlHistorial(tirada, gana);
-
-  botonTirar.disabled = false;
 
   if (saldo < APUESTA_MINIMA) {
     terminarPartida();

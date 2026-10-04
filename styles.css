@@ -28,12 +28,10 @@ body {
   align-items: center;
   justify-content: center;
   padding: 16px;
-  font-family: system-ui, "Segoe UI", Arial, sans-serif;
+  font-family: Arial, sans-serif;
   color: var(--texto);
   background-color: var(--fondo);
-  transition:
-    background-color 0.3s,
-    color 0.3s;
+  transition: background-color 0.3s;
 }
 
 .mesa {
@@ -46,7 +44,6 @@ body {
   background-color: var(--mesa);
   border: 1px solid var(--borde);
   border-radius: 16px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
 }
 
 .oculto {
@@ -74,11 +71,6 @@ h1 {
   color: var(--texto);
 }
 
-strong,
-.tirada {
-  font-variant-numeric: tabular-nums;
-}
-
 .campo {
   display: flex;
   flex-direction: column;
@@ -92,7 +84,6 @@ label {
 
 input[type="number"] {
   padding: 10px 12px;
-  font: inherit;
   font-size: 18px;
   color: var(--texto);
   background-color: var(--fondo);
@@ -104,7 +95,7 @@ input[type="number"] {
   margin: 0;
   text-align: center;
   font-size: 56px;
-  font-weight: 700;
+  font-weight: bold;
 }
 
 .barra {
@@ -141,11 +132,9 @@ input[type="number"] {
   transform: translateX(-50%);
   padding: 2px 8px;
   font-size: 13px;
-  font-weight: 700;
+  font-weight: bold;
   color: #ffffff;
-  background-color: var(--texto);
   border-radius: 6px;
-  pointer-events: none;
   transition: left 0.4s;
 }
 
@@ -157,12 +146,12 @@ input[type="number"] {
 }
 
 .datos {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  display: flex;
   gap: 8px;
 }
 
 .datos p {
+  flex: 1;
   margin: 0;
   padding: 10px;
   text-align: center;
@@ -182,49 +171,29 @@ input[type="number"] {
 
 .boton-tirar {
   padding: 14px;
-  font: inherit;
   font-size: 18px;
-  font-weight: 700;
+  font-weight: bold;
   color: #ffffff;
   background-color: var(--acento);
   border: none;
   border-radius: 10px;
   cursor: pointer;
-  transition: transform 0.1s;
 }
 
 .boton-tirar:hover {
-  filter: brightness(1.1);
-}
-
-.boton-tirar:active {
-  transform: scale(0.98);
-}
-
-.boton-tirar:disabled {
-  opacity: 0.5;
-  cursor: wait;
-}
-
-.boton-tirar:focus-visible,
-input:focus-visible {
-  outline: 3px solid var(--acento);
-  outline-offset: 2px;
+  background-color: #6366f1;
 }
 
 .resultado {
-  min-height: 1.5em;
   margin: 0;
   text-align: center;
-  font-weight: 600;
+  font-weight: bold;
 }
 
 .historial h2 {
   margin: 0 0 8px;
-  font-size: 13px;
+  font-size: 14px;
   color: var(--suave);
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
 }
 
 .lista-historial {
@@ -238,18 +207,12 @@ input:focus-visible {
 
 .lista-historial button {
   padding: 4px 10px;
-  font: inherit;
   font-size: 14px;
-  font-weight: 600;
+  font-weight: bold;
   color: #ffffff;
   border: none;
-  border-radius: 999px;
+  border-radius: 12px;
   cursor: pointer;
-}
-
-.lista-historial button:focus-visible {
-  outline: 3px solid var(--acento);
-  outline-offset: 2px;
 }
 
 .resultado.gana {
